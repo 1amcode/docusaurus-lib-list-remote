@@ -1,0 +1,24 @@
+{
+  "name": "testsite",
+  "version": "0.0.0",
+  "private": true,
+  "scripts": {
+    "testsite:docusaurus": "docusaurus",
+    "testsite:start": "docusaurus start",
+    "testsite:build": "docusaurus build",
+    "testsite:swizzle": "docusaurus swizzle",
+    "testsite:serve": "docusaurus serve",
+    "testsite:clear": "docusaurus clear"
+  },
+  "dependencies": {
+    "@docusaurus/core": "2.0.0-beta.18",
+    "@docusaurus/preset-classic": "2.0.0-beta.18",
+    "@mdx-js/react": "^1.6.21",
+    "clsx": "^1.1.1",
+    "docusaurus-plugin-remote-content": "^3.1.0",
+    "minimatch": "^5.0.1",
+    "octokit": "^1.7.1",
+    "react": "^18.0.0",
+    "react-dom": "^18.0.0"
+  }
+}
