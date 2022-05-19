@@ -1,7 +1,7 @@
 #!/bin/bash
 set -ex
 
-# rm -rf docs/*
-# git co -- docs
+# Cleanup previously fetched files (if any)
+git checkout -- docs
 
 yarn testsite:start

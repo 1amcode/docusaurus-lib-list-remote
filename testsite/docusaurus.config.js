@@ -1,9 +1,9 @@
 const listRemote = require("../docusaurus-lib-list-remote.js")
 
-// Simulating repo with a separate branch
-// Preview: https://github.com/1amcode/1amcode/tree/repo1
+// https://github.com/1amcode/1amcode/tree/repo1
 const repo1 = listRemote.createRepo('1amcode', '1amcode', 'repo1')
-// Preview: https://github.com/1amcode/1amcode/tree/repo2
+
+// https://github.com/1amcode/1amcode/tree/repo2
 const repo2 = listRemote.createRepo('1amcode', '1amcode', 'repo2')
 
 // https://github.com/ethereum/EIPs/tree/master/
@@ -58,32 +58,11 @@ module.exports = {
                     ],
                 },
                 {
-                    title: "Community",
-                    items: [
-                        {
-                            label: "Stack Overflow",
-                            href: "https://stackoverflow.com/questions/tagged/docusaurus",
-                        },
-                        {
-                            label: "Discord",
-                            href: "https://discordapp.com/invite/docusaurus",
-                        },
-                        {
-                            label: "Twitter",
-                            href: "https://twitter.com/docusaurus",
-                        },
-                    ],
-                },
-                {
                     title: "More",
                     items: [
                         {
                             label: "Blog",
                             to: "blog",
-                        },
-                        {
-                            label: "GitHub",
-                            href: "https://github.com/facebook/docusaurus",
                         },
                     ],
                 },
@@ -142,6 +121,9 @@ module.exports = {
                     [
                         'docs/folder21/*.md',
                         'docs/folder22/doc2*',
+                    ],
+                    [
+                        'docs/folder21/doc2b.md'
                     ]
                 )
             },
@@ -156,18 +138,12 @@ module.exports = {
                 documents: listRemote.listDocuments(
                     ethereumEIPsRepo,
                     [
-                        'EIPS/eip-778.md',
-                        'EIPS/eip-9*.md',
-                        'EIPS/eip-1011.md',
-                        'EIPS/eip-1015.md',
-                        'EIPS/eip-165.md',
-                        'EIPS/eip-721.md',
-                        'EIPS/eip-20.md',
+                        'EIPS/eip-90*.md',
                         'LICENSE.md',
-                        'EIPS/eip-86.md',
-                        'EIPS/eip-137.md',
-                        'EIPS/eip-173.md',
-                        'EIPS/eip-2767.md',
+                        'EIPS/eip-86.md'
+                    ],
+                    [
+                        'EIPS/eip-908.md'   
                     ]
                 )
             },

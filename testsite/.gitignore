@@ -20,6 +20,6 @@ yarn-debug.log*
 yarn-error.log*
 
 # remote content
-docs/api.md
-docs/output-dir-testing/
-docs/docs/
+docs/repo1-docs/
+docs/repo2-docs/
+docs/eth-docs/

@@ -37,31 +37,50 @@ test('extractFilesFromTree', () => {
   expect(listRemote.extractFilesFromTree(treeElements)).toStrictEqual(['src/plugins.js', 'src/theme/Footer/index.js']);
 });
 
-test('applyFilters', () => {
-  paths = [
-    'docs/intro.md',
-    'docs/tutorial-basics/_category_.json',
-    'docs/tutorial-basics/congratulations.md',
-    'docs/tutorial-basics/create-a-blog-post.md',
-    'docs/tutorial-basics/markdown-features.mdx',
-    'docs/tutorial-extras/_category_.json',
-    'docs/tutorial-extras/manage-docs-versions.md',
-    'docs/tutorial-extras/translate-your-site.md',
-  ]
-  expect(listRemote.applyFilters(paths, ['docs/intro.md'])).toStrictEqual(
+const paths = [
+  'README.md',
+  'docs/intro.md',
+  'docs/tutorial-basics/_category_.json',
+  'docs/tutorial-basics/congratulations.md',
+  'docs/tutorial-basics/create-a-blog-post.md',
+  'docs/tutorial-basics/markdown-features.mdx',
+  'docs/tutorial-extras/_category_.json',
+  'docs/tutorial-extras/manage-docs-versions.md',
+  'docs/tutorial-extras/translate-your-site.md',
+]
+
+test('applyIncludeFilters', () => {
+  expect(listRemote.applyIncludeFilters(paths, ['docs/intro.md'])).toStrictEqual(
     ['docs/intro.md']);
-  expect(listRemote.applyFilters(paths, ['docs/intro.md', 'docs/tutorial-basics/*.json'])).toStrictEqual(
+  expect(listRemote.applyIncludeFilters(paths, ['docs/intro.md', 'docs/tutorial-basics/*.json'])).toStrictEqual(
     ['docs/intro.md', 'docs/tutorial-basics/_category_.json']);
-  expect(listRemote.applyFilters(paths, ['docs/intro.md', 'docs/tutorial-basics/*.md'])).toStrictEqual(
+  expect(listRemote.applyIncludeFilters(paths, ['docs/intro.md', 'docs/tutorial-basics/*.md'])).toStrictEqual(
     ['docs/intro.md', 'docs/tutorial-basics/congratulations.md', 'docs/tutorial-basics/create-a-blog-post.md']);
-  expect(listRemote.applyFilters(paths, ['docs/intro.md', 'docs/tutorial-basics/*.md', 'docs/tutorial-basics/congratulations.md', 'docs/tutorial-basics/create-a-blog-post.md'])).toStrictEqual(
+  expect(listRemote.applyIncludeFilters(paths, ['docs/intro.md', 'docs/tutorial-basics/*.md', 'docs/tutorial-basics/congratulations.md', 'docs/tutorial-basics/create-a-blog-post.md'])).toStrictEqual(
     ['docs/intro.md', 'docs/tutorial-basics/congratulations.md', 'docs/tutorial-basics/create-a-blog-post.md']);
-  expect(listRemote.applyFilters(paths, ['docs/**/*.md'])).toStrictEqual(
+  expect(listRemote.applyIncludeFilters(paths, ['docs/**/*.md'])).toStrictEqual(
     ['docs/intro.md', 'docs/tutorial-basics/congratulations.md', 'docs/tutorial-basics/create-a-blog-post.md', 
      'docs/tutorial-extras/manage-docs-versions.md', 'docs/tutorial-extras/translate-your-site.md']);
 });
 
-test('dev - filter spec', () => {
+test('applyExcludeFilters', () => {  
+  expect(listRemote.applyExcludeFilters(paths, ['docs/tutorial-*/*'])).toStrictEqual(
+    ['README.md', 'docs/intro.md']);
+
+    expect(listRemote.applyExcludeFilters(paths, ['docs/tutorial-*/*', 'README.md', 'docs/intro.md'])).toStrictEqual(
+    []);
+
+  expect(listRemote.applyExcludeFilters(paths, ['**/*.md'])).toStrictEqual(
+    ['docs/tutorial-basics/_category_.json', 'docs/tutorial-basics/markdown-features.mdx', 'docs/tutorial-extras/_category_.json']);
+  
+  expect(listRemote.applyExcludeFilters(paths, ['**/*.md', 'docs/tutorial-extras/_category_.json'])).toStrictEqual(
+    ['docs/tutorial-basics/_category_.json', 'docs/tutorial-basics/markdown-features.mdx']);
+  
+  expect(listRemote.applyExcludeFilters(paths, ['**/*.md', '**/*.json'])).toStrictEqual(
+    ['docs/tutorial-basics/markdown-features.mdx']);
+});
+
+test('dev - minimatch filter spec', () => {
   const minimatch = require("minimatch")
   minimatchOpts = {
     matchBase: true,
@@ -71,17 +90,6 @@ test('dev - filter spec', () => {
   let doFilter = (paths, filter) => {
     return minimatch.match(paths, filter, minimatchOpts)
   }
-
-  paths = [
-    'docs/intro.md',
-    'docs/tutorial-basics/_category_.json',
-    'docs/tutorial-basics/congratulations.md',
-    'docs/tutorial-basics/create-a-blog-post.md',
-    'docs/tutorial-basics/markdown-features.mdx',
-    'docs/tutorial-extras/_category_.json',
-    'docs/tutorial-extras/manage-docs-versions.md',
-    'docs/tutorial-extras/translate-your-site.md',
-  ]
 
   // ** is only for dirs
   expect(doFilter(paths, 'docs/*.md')).toStrictEqual(['docs/intro.md']);
